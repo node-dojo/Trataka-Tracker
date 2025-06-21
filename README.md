@@ -1,6 +1,8 @@
+[![Launch Trataka Tracker](https://img.shields.io/badge/Launch-Trataka%20Tracker-2ea44f?style=for-the-badge)](https://node-dojo.github.io/Trataka-Tracker/)
+
 # Trataka Tracker v1
 
-![Trataka Tracker Screen cap](https://github.com/user-attachments/assets/2cde50f4-61e4-4c41-9d37-68ca5ba959e7)
+![Trataka Tracker Screenshot](assets/Trataka%20Tracker%20Screen%20cap.png)
 
 
 ## About The Project
