@@ -1,6 +1,7 @@
 # Trataka Tracker v1
 
-![Trataka Tracker Screenshot](assets/Trataka%20Tracker%20Screen%20cap.png)
+![Trataka Tracker Screen cap](https://github.com/user-attachments/assets/2cde50f4-61e4-4c41-9d37-68ca5ba959e7)
+
 
 ## About The Project
 
