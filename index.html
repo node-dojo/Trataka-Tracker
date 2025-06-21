@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trataka Tracker - Eye-Tracking Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="instructions">
+        <h1>Eye-Tracking Test</h1>
+        <p>The webcam feed is now full-screen. To calibrate, click on different points of the screen while looking at your cursor.</p>
+        <p>A red dot should appear and start following your gaze.</p>
+    </div>
+
+    <!-- This div will be the red dot that follows your gaze -->
+    <div id="gaze-dot"></div>
+
+    <!-- WebGazer.js library from a CDN -->
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+
+    <!-- Our custom script -->
+    <script src="script.js"></script>
+</body>
+</html> 

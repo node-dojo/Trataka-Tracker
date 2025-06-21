@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trataka Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mediapipe_tracker.css">
+</head>
+<body>
+    <div id="container">
+        <!-- The canvas is where we'll draw the video and overlays -->
+        <canvas id="output_canvas" class="hidden"></canvas>
+        
+        <!-- This video element is hidden but required as the source for MediaPipe -->
+        <video id="input_video" style="display: none;"></video>
+    </div>
+
+    <!-- Main header and instructions (Initial State) -->
+    <div id="instructions">
+        <div class="welcome-text-block">
+            <img src="assets/pixel W logo.png" alt="Logo" class="logo">
+            <div class="title-block">
+                <h1>TRATAKA TRACKER</h1>
+                <p class="subtitle">by The Well Tarot</p>
+            </div>
+            <div class="body-text">
+                <p>A guided experience for drastically improving cognitive accuity through the ancient practice of eye-gaze meditation.</p>
+                <p>Informed by Neurofeedback research and ongoing discoveries of the significnce of the connection between our eyes and minds.</p>
+            </div>
+            <div class="cta">
+                <p>Click any where to begin calibration</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 1: Crop Adjustment Controls -->
+    <div id="crop-controls" class="hidden">
+        <div class="main-content">
+            <div class="top-container">
+                <div class="header">
+                    <h1>TRATAKA<br>TRACKER</h1>
+                    <div class="instructions-text">
+                        <p>CALIBRATION SETUP STEP 1:</p>
+                        <p>USE THE SLIDERS TO ADJUST THE YOUR EYE SO THAT THE IRIS IS CENTERED ON THE WHITE CROSS-HAIR</p>
+                    </div>
+                </div>
+                <p class="byline">by The Well Tarot</p>
+            </div>
+            <div class="bottom-controls">
+                <div class="slider-controls">
+                    <div class="slider-container">
+                        <label for="y-offset-slider">y</label>
+                        <input type="range" id="y-offset-slider" min="-150" max="150" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="x-offset-slider">x</label>
+                        <input type="range" id="x-offset-slider" min="-150" max="150" value="0">
+                    </div>
+                </div>
+            </div>
+            <button id="ready-button" class="control-button">READY.</button>
+        </div>
+        <div id="settings-panel">
+            <div class="settings-group">
+                <h2>DIFFICULTY SETTINGS</h2>
+                <div class="setting-item">
+                    <label for="target-zone-size">TARGET ZONE SIZE(PX):</label>
+                    <input type="text" id="target-zone-size" value="20">
+                </div>
+                <div class="setting-item">
+                    <label>DIFFICULTY RATING:</label>
+                    <span id="difficulty-rating">Adept</span>
+                </div>
+            </div>
+            <div class="settings-group">
+                <h2>EYE FEED SETTINGS</h2>
+                <div class="setting-item">
+                    <label for="brightness">BRIGHTNESS</label>
+                    <input type="text" id="brightness" value="100.0">
+                </div>
+                <div class="setting-item">
+                    <label for="contrast">CONTRAST</label>
+                    <input type="text" id="contrast" value="200">
+                </div>
+                <div class="setting-item">
+                    <label for="block-size">BLOCK SIZE</label>
+                    <input type="text" id="block-size" value="4">
+                </div>
+                <div class="setting-item">
+                    <label for="dither-algorithm">DITHER ALGORITHM</label>
+                    <select id="dither-algorithm">
+                        <option value="jarvis">Jarvis-Stucki</option>
+                        <option value="floyd">Floyd-Steinberg</option>
+                        <option value="atkinson" selected>Atkinson</option>
+                        <option value="bayer">Bayer (4x4)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sliders are separate for independent positioning -->
+    <!-- <input type="range" id="x-offset-slider" class="hidden" min="-150" max="150" value="0">
+    <input type="range" id="y-offset-slider" class="hidden" min="-150" max="150" value="0"> -->
+
+    <!-- Step 2: Gaze Calibration Overlay -->
+    <div id="gaze-calibration-overlay" class="hidden">
+        <div id="calibration-point"></div>
+        <div id="calibration-text">
+            <p>NOW, STARE DIRECTLY AT THE CENTER OF THE RED DIAMOND FOR 3-5 SECONDS.</p>
+            <p>THEN CLICK ON THE CENTER OF IT.</p>
+        </div>
+    </div>
+    
+    <!-- Step 3: Session Start Message -->
+    <div id="session-start-overlay" class="hidden">
+        <p>Your session begins now. Soften your mind, and breathe normally.</p>
+    </div>
+
+    <!-- Live Session Timer -->
+    <div id="timer" class="hidden">00:00:00</div>
+
+    <!-- Step 4: Session Summary -->
+    <div id="session-summary-overlay" class="hidden">
+        <div class="top-container">
+            <h1>SESSION<br>COMPLETE</h1>
+            <p class="byline">by The Well Tarot</p>
+        </div>
+
+        <div class="summary-main-content">
+            <canvas id="heatmap_canvas"></canvas>
+            <div id="summary-stats"></div>
+        </div>
+        
+        <img src="assets/pixel W logo.png" alt="Logo" class="logo summary-logo">
+        <p class="cta">Click anywhere to restart.</p>
+    </div>
+
+    <!-- Persistent Controls (Reset) -->
+    <button id="reset-button" class="control-button hidden">Reset</button>
+
+    <!-- Load the MediaPipe libraries first -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <!-- Then load our custom script -->
+    <script src="mediapipe_tracker.js"></script>
+</body>
+</html> 
