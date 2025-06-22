@@ -350,7 +350,7 @@ function onResults(results) {
 }
 
 // --- State Transition & Event Listeners ---
-document.addEventListener('click', (event) => {
+function handleMainInteraction() {
     switch (state) {
         case 'IDLE':
             state = 'CROP_ADJUSTMENT';
@@ -407,16 +407,21 @@ document.addEventListener('click', (event) => {
             window.location.reload();
             break;
     }
-});
+}
 
-readyButton.addEventListener('click', () => {
+document.addEventListener('click', handleMainInteraction);
+document.addEventListener('touchstart', handleMainInteraction);
+
+function handleReadyClick() {
     if (state !== 'CROP_ADJUSTMENT') return;
 
     state = 'GAZE_CALIBRATION';
     cropControlsEl.classList.add('hidden');
     canvasElement.classList.remove('calibrating-crop');
     gazeCalibrationOverlay.classList.remove('hidden');
-});
+}
+readyButton.addEventListener('click', handleReadyClick);
+readyButton.addEventListener('touchstart', handleReadyClick);
 
 function drawHeatmap() {
     const heatmapCtx = heatmapCanvas.getContext('2d');
@@ -510,10 +515,12 @@ function formatTime(seconds) {
     return `${h}:${m}:${s}`;
 }
 
-resetButton.addEventListener('click', (event) => {
+function handleResetClick(event) {
     event.stopPropagation(); // Prevent the main click listener from firing
     window.location.reload();
-});
+}
+resetButton.addEventListener('click', handleResetClick);
+resetButton.addEventListener('touchstart', handleResetClick);
 
 // --- Settings Listeners ---
 targetZoneInput.addEventListener('input', (e) => {
@@ -553,7 +560,12 @@ yOffsetSlider.addEventListener('input', (event) => yOffset = parseInt(event.targ
 const faceMesh = new FaceMesh({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}` });
 faceMesh.setOptions({ maxNumFaces: 1, refineLandmarks: true, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
 faceMesh.onResults(onResults);
-const camera = new Camera(videoElement, { onFrame: async () => await faceMesh.send({ image: videoElement }), width: 1280, height: 720 });
+const camera = new Camera(videoElement, {
+    onFrame: async () => await faceMesh.send({ image: videoElement }),
+    width: 1280,
+    height: 720,
+    facingMode: 'user' // Use the front camera on mobile
+});
 camera.start();
 console.log("Camera start command issued.");
 updateDifficultyRating(); // Set initial rating 

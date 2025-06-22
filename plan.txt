@@ -1,0 +1,6 @@
+- Mirror the eye feed so it makes more sense.
+- change yellow dot to cross hairs
+- fix step 1 of the calibration to include the crosshairs and instruct users to use the controls to center the crosshairs to the middle of their iris
+- black and white, high contrast dithering of the video feed
+- Step 1 vertical alignment
+- Step 3 text above not over the video feed

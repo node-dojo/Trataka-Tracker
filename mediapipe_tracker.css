@@ -572,4 +572,181 @@ body {
     transform: translateX(-50%);
     color: white;
     border-color: white;
+    width: 100%;
+    max-width: 400px; /* Match the main content width */
+}
+
+/* --- Media Queries for Mobile Responsiveness --- */
+
+@media (max-width: 800px) {
+    /* General body adjustments */
+    body {
+        /* Allow for scrolling on small screens if content overflows */
+        height: auto;
+        min-height: 100vh;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    #container {
+        gap: 15px;
+    }
+
+    /* Make canvas responsive */
+    #output_canvas {
+        width: 90vw;
+        height: 90vw;
+    }
+
+    /* --- Welcome Screen --- */
+    .welcome-text-block {
+        width: 100%;
+        padding: 0;
+        gap: 15px;
+    }
+
+    .title-block {
+        padding: 15px 0;
+    }
+    
+    .title-block h1 {
+        font-size: 13vw; /* Use viewport width for scaling */
+        letter-spacing: 0.8vw;
+    }
+
+    .title-block .subtitle {
+        font-size: 6vw;
+        letter-spacing: 0.5vw;
+    }
+
+    .body-text {
+        padding: 15px 0;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .body-text p {
+        padding-bottom: 1.8em;
+    }
+
+    /* --- Crop Adjustment Screen --- */
+    #crop-controls {
+        position: relative;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0;
+        gap: 30px;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+    }
+
+    #crop-controls .main-content {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        order: 2; /* Move below settings panel */
+        align-items: center;
+    }
+    
+    #crop-controls .top-container {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    #crop-controls .header {
+        gap: 10px;
+    }
+
+    #crop-controls .header h1 {
+        font-size: 12vw;
+        text-align: center;
+    }
+    
+     #crop-controls .byline {
+        font-size: 6vw;
+        text-align: center;
+        width: 100%;
+    }
+
+    #crop-controls .instructions-text {
+        font-size: 14px;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .bottom-controls {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .slider-controls {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        gap: 15px;
+    }
+    
+    #settings-panel {
+        position: relative;
+        order: 1; /* Move above main content */
+        width: 100%;
+        max-width: 100%;
+        gap: 20px;
+    }
+
+    .setting-item input,
+    .setting-item select {
+        width: 100px;
+    }
+
+
+    /* --- Gaze Calibration Screen --- */
+    #calibration-text {
+        width: 90%;
+        font-size: 16px;
+        bottom: 20%;
+    }
+
+    /* --- Session Summary Screen --- */
+    #session-summary-overlay {
+        padding: 20px;
+        justify-content: flex-start;
+        gap: 20px;
+        position: relative;
+    }
+    
+    .summary-main-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
+
+    #heatmap_canvas {
+        width: 80vw;
+        height: 80vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    #summary-stats {
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+    
+    #session-summary-overlay .top-container h1 {
+        font-size: 13vw;
+    }
+
+    #session-summary-overlay .byline {
+        font-size: 6vw;
+    }
 } 
