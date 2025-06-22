@@ -41,10 +41,10 @@
         <div class="main-content">
             <div class="top-container">
                 <div class="header">
-                    <h1>TRATAKA<br>TRACKER</h1>
+                    <h1>TRATAKA TRACKER</h1>
                     <div class="instructions-text">
-                        <p>CALIBRATION SETUP STEP 1:</p>
-                        <p>USE THE SLIDERS TO ADJUST THE YOUR EYE SO THAT THE IRIS IS CENTERED ON THE WHITE CROSS-HAIR</p>
+                        <p>CALIBRATION SETUP</p>
+                        <p>USE THE SLIDERS TO ADJUST YOUR EYE SO THAT THE<br>IRIS IS CENTERED ON THE WHITE CROSS-HAIR</p>
                     </div>
                 </div>
                 <p class="byline">by The Well Tarot</p>
@@ -67,16 +67,16 @@
             <div class="settings-group">
                 <h2>DIFFICULTY SETTINGS</h2>
                 <div class="setting-item">
-                    <label for="target-zone-size">TARGET ZONE SIZE(PX):</label>
-                    <input type="text" id="target-zone-size" value="20">
-                </div>
-                <div class="setting-item">
                     <label>DIFFICULTY RATING:</label>
                     <span id="difficulty-rating">Adept</span>
                 </div>
+                <div class="setting-item">
+                    <label for="target-zone-size">TARGET ZONE SIZE(PX):</label>
+                    <input type="text" id="target-zone-size" value="20">
+                </div>
             </div>
-            <div class="settings-group">
-                <h2>EYE FEED SETTINGS</h2>
+            <details class="settings-group">
+                <summary>EYE FEED SETTINGS</summary>
                 <div class="setting-item">
                     <label for="brightness">BRIGHTNESS</label>
                     <input type="text" id="brightness" value="100.0">
@@ -98,7 +98,7 @@
                         <option value="bayer">Bayer (4x4)</option>
                     </select>
                 </div>
-            </div>
+            </details>
         </div>
     </div>
     

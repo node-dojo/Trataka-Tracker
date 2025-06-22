@@ -351,6 +351,15 @@ function onResults(results) {
 
 // --- State Transition & Event Listeners ---
 function handleMainInteraction() {
+    // On the first user interaction, try to play the video element.
+    // This is necessary for some mobile browsers like Safari.
+    if (state === 'IDLE') {
+        videoElement.play().catch(e => {
+            console.error("Error attempting to play video:", e);
+            // Optionally, display a user-friendly error message here.
+        });
+    }
+
     switch (state) {
         case 'IDLE':
             state = 'CROP_ADJUSTMENT';
@@ -566,6 +575,9 @@ const camera = new Camera(videoElement, {
     height: 720,
     facingMode: 'user' // Use the front camera on mobile
 });
-camera.start();
+camera.start().catch((error) => {
+    console.error("Failed to start camera:", error);
+    // You could display an error message to the user here.
+});
 console.log("Camera start command issued.");
 updateDifficultyRating(); // Set initial rating 

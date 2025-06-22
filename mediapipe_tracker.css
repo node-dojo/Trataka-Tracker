@@ -248,6 +248,7 @@ body {
     line-height: 0.97;
     text-align: right;
     margin: 0;
+    width: 100%; /* Ensure byline spans width to allow text-align */
 }
 
 #crop-controls .instructions-text {
@@ -321,11 +322,12 @@ body {
 }
 #x-offset-slider::-moz-range-thumb,
 #y-offset-slider::-moz-range-thumb {
-    background: #d9d9d9;
-    height: 20px;
-    width: 6px;
-    border: none;
-    border-radius: 0;
+    width: 25px;
+    height: 25px;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid #000;
 }
 
 /* Gaze Calibration Overlay */
@@ -576,6 +578,34 @@ body {
     max-width: 400px; /* Match the main content width */
 }
 
+/* --- New styles for settings dropdown --- */
+.settings-group summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    list-style: none; /* Remove default marker */
+    padding-left: 1.5em;
+    position: relative;
+}
+
+.settings-group summary::-webkit-details-marker {
+    display: none; /* Hide default marker for Safari */
+}
+
+.settings-group summary::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.2em;
+    line-height: 0.9;
+}
+
+.settings-group[open] summary::before {
+    content: '−';
+}
+
 /* --- Media Queries for Mobile Responsiveness --- */
 
 @media (max-width: 800px) {
@@ -647,8 +677,9 @@ body {
         max-width: 100%;
         width: 100%;
         height: auto;
-        order: 2; /* Move below settings panel */
+        order: 1; /* Was 2, changed to place it before settings */
         align-items: center;
+        gap: 20px; /* Added gap for spacing */
     }
     
     #crop-controls .top-container {
@@ -662,12 +693,12 @@ body {
     }
 
     #crop-controls .header h1 {
-        font-size: 12vw;
+        font-size: 10vw; /* Adjusted for single line */
         text-align: center;
     }
     
      #crop-controls .byline {
-        font-size: 6vw;
+        font-size: 5vw; /* Adjusted for balance */
         text-align: center;
         width: 100%;
     }
@@ -695,17 +726,73 @@ body {
     
     #settings-panel {
         position: relative;
-        order: 1; /* Move above main content */
+        order: 2; /* Was 1, changed to place it after main content */
         width: 100%;
         max-width: 100%;
         gap: 20px;
     }
 
+    .settings-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .settings-group h2, .settings-group summary {
+        /* This will be hidden, but good to keep for structure */
+        border-bottom: 1px solid white;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        width: 80%;
+    }
+
+    .setting-item {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 5px; /* Add gap between label and value */
+    }
+
+    .setting-item label {
+       font-size: 14px;
+    }
+
     .setting-item input,
     .setting-item select {
         width: 100px;
+        text-align: center; /* Center the text in the input */
     }
 
+    #x-offset-slider, #y-offset-slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 15px;
+        border-radius: 5px;
+        background: #333;
+        outline: none;
+    }
+
+    #x-offset-slider::-webkit-slider-thumb,
+    #y-offset-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 30px; /* Larger touch target */
+        height: 30px; /* Larger touch target */
+        border-radius: 50%;
+        background: #FFFFFF;
+        cursor: pointer;
+    }
+
+    #x-offset-slider::-moz-range-thumb,
+    #y-offset-slider::-moz-range-thumb {
+        width: 30px; /* Larger touch target */
+        height: 30px; /* Larger touch target */
+        border-radius: 50%;
+        background: #FFFFFF;
+        cursor: pointer;
+    }
 
     /* --- Gaze Calibration Screen --- */
     #calibration-text {
